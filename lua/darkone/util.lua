@@ -18,11 +18,11 @@ end
 ---@param bg string background color
 ---@param alpha number number between 0 and 1. 0 results in bg, 1 results in fg
 function util.blend(fg, bg, alpha)
-	local bg_t = hexToRgb(bg)
-	local fg_t = hexToRgb(fg)
+	bg = hexToRgb(bg)
+	fg = hexToRgb(fg)
 
 	local blendChannel = function(i)
-		local ret = (alpha * fg_t[i] + ((1 - alpha) * bg_t[i]))
+		local ret = (alpha * fg[i] + ((1 - alpha) * bg[i]))
 		return math.floor(math.min(math.max(0, ret), 255) + 0.5)
 	end
 
