@@ -77,8 +77,8 @@ hl.common = {
 	NonText = { fg = c.dark_grey },
 	Whitespace = { fg = c.dark_grey },
 	SpecialKey = { fg = c.dark_grey },
-	Pmenu = { fg = c.fg, bg = c.bg1 },
-	PmenuSbar = { fg = c.none, bg = c.bg1 },
+	Pmenu = { fg = c.fg, bg = c.bg_d },
+	PmenuSbar = { fg = c.none, bg = c.bg_d },
 	PmenuSel = { fg = c.bg0, bg = c.bg_blue },
 	WildMenu = { fg = c.bg0, bg = c.blue },
 	PmenuThumb = { fg = c.none, bg = c.dark_grey },
@@ -94,7 +94,7 @@ hl.common = {
 	TabLine = { fg = c.fg, bg = c.bg1 },
 	TabLineFill = { fg = c.dark_grey, bg = c.bg1 },
 	TabLineSel = { fg = c.bg0, bg = c.fg },
-	WinSeparator = { fg = c.bg3 },
+	WinSeparator = { fg = c.bg_d },
 	Visual = { bg = c.bg3 },
 	VisualNOS = { fg = c.none, bg = c.bg2, fmt = "underline" },
 	QuickFixLine = { fg = c.blue, fmt = "underline" },
@@ -563,9 +563,9 @@ hl.plugins.telescope = {
 
 hl.plugins.dashboard = {
 	DashboardShortCut = colors.Blue,
-	DashboardHeader = colors.Yellow,
+	DashboardHeader = colors.Magenta,
 	DashboardCenter = colors.Cyan,
-	DashboardFooter = { fg = c.dark_red, fmt = "italic" },
+	DashboardFooter = { fg = c.blue, fmt = "italic" },
 }
 
 hl.plugins.outline = {
