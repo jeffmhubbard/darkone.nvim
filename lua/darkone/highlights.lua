@@ -1,5 +1,6 @@
+local v = vim
 local c = require("darkone.colors")
-local cfg = vim.g.darkone_config
+local cfg = v.g.darkone_config
 local util = require("darkone.util")
 
 local M = {}
@@ -7,7 +8,7 @@ local hl = { langs = {}, plugins = {} }
 
 local function vim_highlights(highlights)
 	for group_name, group_settings in pairs(highlights) do
-		vim.api.nvim_command(
+		v.api.nvim_command(
 			string.format(
 				"highlight %s guifg=%s guibg=%s guisp=%s gui=%s",
 				group_name,
@@ -141,7 +142,7 @@ hl.syntax = {
 	Todo = { fg = c.red, fmt = cfg.code_style.comments },
 }
 
-if vim.api.nvim_call_function("has", { "nvim-0.8" }) == 1 then
+if v.api.nvim_call_function("has", { "nvim-0.8" }) == 1 then
 	hl.treesitter = {
 		-- nvim-treesitter@0.9.2 and after
 		["@annotation"] = colors.Fg,
@@ -257,7 +258,7 @@ if vim.api.nvim_call_function("has", { "nvim-0.8" }) == 1 then
 		["@text.diff.add"] = colors.Green,
 		["@text.diff.delete"] = colors.Red,
 	}
-	if vim.api.nvim_call_function("has", { "nvim-0.9" }) == 1 then
+	if v.api.nvim_call_function("has", { "nvim-0.9" }) == 1 then
 		hl.lsp = {
 			["@lsp.type.comment"] = hl.treesitter["@comment"],
 			["@lsp.type.enum"] = hl.treesitter["@type"],
@@ -863,7 +864,7 @@ hl.langs.tex = {
 	texPgfType = colors.Yellow,
 }
 
-hl.langs.vim = {
+hl.langs.v = {
 	vimOption = colors.Red,
 	vimSetEqual = colors.Yellow,
 	vimMap = colors.Magenta,
@@ -943,10 +944,10 @@ function M.setup()
 			local name = color_name:sub(2, -1)
 			color_name = c[name]
 			if not color_name then
-				vim.schedule(function()
-					vim.notify(
+				v.schedule(function()
+					v.notify(
 						'darkone.nvim: unknown color "' .. name .. '"',
-						vim.log.levels.ERROR,
+						v.log.levels.ERROR,
 						{ title = "darkone.nvim" }
 					)
 				end)
@@ -956,8 +957,8 @@ function M.setup()
 		return prefix .. "=" .. color_name
 	end
 
-	for group_name, group_settings in pairs(vim.g.darkone_config.highlights) do
-		vim.api.nvim_command(
+	for group_name, group_settings in pairs(v.g.darkone_config.highlights) do
+		v.api.nvim_command(
 			string.format(
 				"highlight %s %s %s %s %s",
 				group_name,

@@ -1,28 +1,29 @@
+local v = vim
 local M = {}
 
 M.styles_list = { "darkest" }
 
----Change darkone option (vim.g.darkone_config.option)
+---Change darkone option (v.g.darkone_config.option)
 ---It can't be changed directly by modifying that field due to a Neovim lua bug with global variables (darkone_config is a global variable)
 ---@param opt string: option name
 ---@param value any: new value
 function M.set_options(opt, value)
-	local cfg = vim.g.darkone_config
+	local cfg = v.g.darkone_config
 	cfg[opt] = value
-	vim.g.darkone_config = cfg
+	v.g.darkone_config = cfg
 end
 
 ---Apply the colorscheme (same as ':colorscheme darkone')
 function M.colorscheme()
-	vim.cmd("hi clear")
-	if vim.fn.exists("syntax_on") then
-		vim.cmd("syntax reset")
+	v.cmd("hi clear")
+	if v.fn.exists("syntax_on") then
+		v.cmd("syntax reset")
 	end
-	vim.o.termguicolors = true
-	vim.g.colors_name = "darkone"
-	--if vim.o.background == "light" then
+	v.o.termguicolors = true
+	v.g.colors_name = "darkone"
+	--if v.o.background == "light" then
 	--	M.set_options("style", "light")
-	--elseif vim.g.darkone_config.style == "light" then
+	--elseif v.g.darkone_config.style == "light" then
 	--	M.set_options("style", "light")
 	--end
 	require("darkone.highlights").setup()
@@ -31,18 +32,18 @@ end
 
 ---Toggle between darkone styles
 function M.toggle()
-	local index = vim.g.darkone_config.toggle_style_index + 1
-	if index > #vim.g.darkone_config.toggle_style_list then
+	local index = v.g.darkone_config.toggle_style_index + 1
+	if index > #v.g.darkone_config.toggle_style_list then
 		index = 1
 	end
-	M.set_options("style", vim.g.darkone_config.toggle_style_list[index])
+	M.set_options("style", v.g.darkone_config.toggle_style_list[index])
 	M.set_options("toggle_style_index", index)
-	--if vim.g.darkone_config.style == "light" then
-	--	vim.o.background = "light"
+	--if v.g.darkone_config.style == "light" then
+	--	v.o.background = "light"
 	--else
-	vim.o.background = "dark"
+	v.o.background = "dark"
 	--end
-	vim.api.nvim_command("colorscheme darkone")
+	v.api.nvim_command("colorscheme darkone")
 end
 
 local default_config = {
@@ -84,21 +85,21 @@ local default_config = {
 ---Setup darkone.nvim options, without applying colorscheme
 ---@param opts table: a table containing options
 function M.setup(opts)
-	if not vim.g.darkone_config or not vim.g.darkone_config.loaded then -- if it's the first time setup() is called
-		vim.g.darkone_config = vim.tbl_deep_extend("keep", vim.g.darkone_config or {}, default_config)
+	if not v.g.darkone_config or not v.g.darkone_config.loaded then -- if it's the first time setup() is called
+		v.g.darkone_config = v.tbl_deep_extend("keep", v.g.darkone_config or {}, default_config)
 		M.set_options("loaded", true)
 		M.set_options("toggle_style_index", 0)
 	end
 	if opts then
-		vim.g.darkone_config = vim.tbl_deep_extend("force", vim.g.darkone_config, opts)
+		v.g.darkone_config = v.tbl_deep_extend("force", v.g.darkone_config, opts)
 		if opts.toggle_style_list then -- this table cannot be extended, it has to be replaced
 			M.set_options("toggle_style_list", opts.toggle_style_list)
 		end
 	end
-	if vim.g.darkone_config.toggle_style_key then
-		vim.api.nvim_set_keymap(
+	if v.g.darkone_config.toggle_style_key then
+		v.api.nvim_set_keymap(
 			"n",
-			vim.g.darkone_config.toggle_style_key,
+			v.g.darkone_config.toggle_style_key,
 			'<cmd>lua require("darkone").toggle()<cr>',
 			{ noremap = true, silent = true }
 		)
@@ -106,7 +107,7 @@ function M.setup(opts)
 end
 
 function M.load()
-	vim.api.nvim_command("colorscheme darkone")
+	v.api.nvim_command("colorscheme darkone")
 end
 
 return M
